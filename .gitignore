@@ -46,4 +46,4 @@ po/*~
 
 # Project specific ignores
 Feedstock/*
-_targets/*
+R/_targets/*
