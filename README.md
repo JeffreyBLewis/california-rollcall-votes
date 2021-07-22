@@ -2,7 +2,7 @@
 
 This project provides ready-to-analyze roll call voting data from the California Assembly and Senate from 1993 to present. The data from the current session are updated weekly. The datasets are constructed from files provided at [ftp://leginfo.ca.gov/pub](ftp://leginfo.ca.gov/pub).
 
-A tutorial on how to load and analyze these data using R can be found [here](master/Rmd/california_rollcall_howto.html). 
+A tutorial on how to load and analyze these data using R can be found [here](raw/master/Rmd/california_rollcall_howto.html). 
 
 Zip archives are provided for each two-year session. Each zip file contains two files:
 
