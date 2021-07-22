@@ -14,15 +14,13 @@ get_and_read_fn <- function(url_tar) {
     "BILL_SUMMARY_VOTE_TBL.dat",
     "BILL_DETAIL_VOTE_TBL.dat"
   )
-  temp <- tempfile()
+  temp_zip <- tempfile(fileext = ".zip")
   download.file(url_tar, temp)
-  utils::unzip(temp, files = files_list)
-  unlink(temp)
+  #utils::unzip(temp, files = files_list)
   
   #read into r objects
   bill_version_authors <-
-    read_tsv(
-      sprintf("BILL_VERSION_AUTHORS_TBL.dat"),
+    read_tsv(unz(temp, "BILL_VERSION_AUTHORS_TBL.dat"),
       col_names = c(
         "bill_version_id",
         "type",
@@ -41,7 +39,7 @@ get_and_read_fn <- function(url_tar) {
   
   
   bill_version_summary <- read_tsv(
-    sprintf("BILL_VERSION_TBL.dat"),
+    unz(temp, "BILL_VERSION_TBL.dat"),
     col_names = c(
       "bill_version_id",
       "bill_id",
@@ -75,7 +73,7 @@ get_and_read_fn <- function(url_tar) {
     arrange(bill_version_id)
   
   committee_dat <- read_tsv(
-    sprintf("COMMITTEE_AGENDA_TBL.dat"),
+    unz(temp_zip, "COMMITTEE_AGENDA_TBL.dat"),
     col_names = c(
       "committee_code",
       "COMMITTEE_DESC",
@@ -167,7 +165,8 @@ get_and_read_fn <- function(url_tar) {
     mutate(rcnum = group_indices()) %>%
     ungroup()
   
-  
+  unlink(temp_zip) # rm the zip file
+   
   #return list of r objects
   list(
     bill_version_authors = bill_version_authors,
