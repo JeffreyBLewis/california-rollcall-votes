@@ -1,0 +1,10 @@
+name|type|data|command|depend|seed|path|time|size|bytes|format|iteration|parent|children|seconds|warnings|error
+url|stem|86af1d762979def8|688b937e737bf2d0|bffda10c489b9d69|-1139720308|https://downloads.leginfo.legislature.ca.gov/pubinfo_2021.zip|||0|url|vector|||0.002||
+url_tar|stem|86af1d762979def8|688b937e737bf2d0|bffda10c489b9d69|1225202321|https://downloads.leginfo.legislature.ca.gov/pubinfo_2021.zip|||0|url|vector|||1.087||
+get_and_read|stem|b44ee3885df408a6|44caaa1558336c7f|ba803bbd9ef8574a|-777596427||t18827.7155727924s|6682643b1791a68b|1775330|rds|vector|||142.86|group_indices was deprecated in dplyr 1.0.0.Please use cur_group_id instead.90mThis warning is displayed once every|
+clean|stem|c5c79d6a5c6ccfa8|307dcdcdb5382c3f|4aa37d8600c23108|1640993750||t18827.718846249s|858c559f17f1ce84|247563|rds|vector|||2.78||
+get_and_read_fn|function|62b8a5ef53e7cfca||||||||||||||
+clean_fn|function|24ec0b448177402e||||||||||||||
+zip_and_publish_fn|function|c855817cebc6f5aa||||||||||||||
+year|stem|23ed09ba77091d31|a0d4131fba935fb2|ef46db3751d8e999|-1645897793||t18830.7442054273s|c9aaea90a821e608|53|rds|vector|||1.102||
+zip_and_publish|stem|42d7382ded71aec4|d29d4cc26c830d60|a06e344e8d316865|-2063232459||t18827.7353745882s|ded833868582137a|50|rds|vector|||4.152||
