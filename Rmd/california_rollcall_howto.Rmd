@@ -1,0 +1,202 @@
+---
+title: "Reading California Roll Call Data using R"
+author: "Jeff Lewis"
+date: "21 July 2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Overview 
+
+This document describes how the California State Assembly and Senate rollcall data found at https://github.com/JeffreyBLewis/california-rollcall-votes
+ can be analyzed using R.  In this example, we will consider the 2019-20 legislature.  Analyzing a different session would entail loading up different data files, but the process of loading the data from other sessions is identical.  The Rmarkdown code for this document can be found [here](https://github.com/JeffreyBLewis/california-rollcall-votes/Rmd/california_rollcall_howto.Rmd).
+
+
+## Steps
+
+### Loading packages
+
+The following R packages are needed.  If you do not have them installed, you will need to do that first. The first three are only required if you wish to run WNOMINATE and/or make nice tables. 
+
+```{r libraries}
+suppressPackageStartupMessages(library(pscl))
+suppressPackageStartupMessages(library(wnominate))
+suppressPackageStartupMessages(library(kableExtra))
+suppressPackageStartupMessages(library(tidyverse))
+suppressPackageStartupMessages(library(purrr))
+```
+
+### Downloading the data
+
+The data for each legislative period are provided in a zip file that includes two datasets.  One dataset describes the votes taken and the other records each vote made by each legislator.  R can download and unzip these files into a temporary directory itself.  Here is how:
+
+```{r download data}
+tmp <- tempfile()
+tmpdir <- tempdir()
+download.file(
+  "https://github.com/JeffreyBLewis/california-rollcall-votes/raw/master/Data/caleg19-20.zip",
+  tmp
+)
+unzip(tmp, exdir = tmpdir)
+```
+
+### Reading the description data
+
+Now we can read the tab-delimited vote description data:
+
+```{r descriptions, message=FALSE}
+desc_dat <- read_tsv(
+  file.path(tmpdir, "ca19-20desc.dat"),
+  col_names = c(
+    "rcnum",
+    "bill",
+    "author",
+    "topic",
+    "date",
+    "location",
+    "motion",
+    "yeas",
+    "noes",
+    "outcome"
+  ),
+  locale = readr::locale(encoding = 'latin1')
+)
+head(desc_dat)
+```
+
+### Reading the vote data
+
+The vote matrix is loaded up next.  Each row of the vote data file records how a given member of the legislature voted on each roll call taken.  This is a very wide file in which each column represents a single rollcall. There are no field delimiters in this file making it a bit challenging to read.  Most of the entries are zeros because most members are not elligle to participate in most votes.  For example, senators cannot vote on the Assembly rollcalls and members who are on a given committee cannot vote on its rollcalls.  Here is how we can read the vote data:
+
+```{r vote data}
+vote_dat <- scan(
+  file.path(tmpdir, "ca19-20votes.dat"),
+  what = "character",
+  sep = "\n",
+  fileEncoding = "latin1"
+) %>%
+  map_df(function(r)
+    tibble(name = str_trim(str_sub(r, 1, 20)),
+           vote = as.numeric(str_split(
+             str_sub(r, 21,-1),
+             pattern = ""
+           )[[1]])) %>%
+      mutate(rcnum = 1:n())) %>%
+  filter(vote != 0)
+head(vote_dat)
+```
+
+Note that we have read these data in as key-value pairs for which each record indicates a given member's vote on a given roll call.  We drop of the vote codes that are zeros because those are instances in which a given member was not elligible to vote on a given rollcall;  there is no need to keep those records.
+
+### Selecting roll call votes to analyze
+
+Generally speaking, we will want to select a subset of roll calls to study.  For example, here we extract the Asssembly floor votes on which at least three members voted on each side of the question:
+
+```{r assembly floor votes}
+asm_floor_vote_desc <- desc_dat %>%
+  filter(location %in% c("Assembly Floor Session", "ASM. FLOOR"),
+         yeas > 2,
+         noes > 2) 
+```
+
+Once we have the `rcnum` values for the Assembly floor votes, we can then subset the vote records to just those that are assocated with those roll calls.  Before constructing the vote data, I will first confirm that everything seems to be in order by checking that summing the observed votes on each roll call results in the yeas and noes totals in the description data.  Here we see that it does because no records for which the totals fail to add up are found.
+
+```{r assembly floor vote data check}
+vote_dat %>%
+  right_join(asm_floor_vote_desc, by = "rcnum") %>%
+  group_by(rcnum, bill, topic, date) %>%
+  summarize(
+    n_yea = sum(vote == 1),
+    n_no  = sum(vote == 6),
+    yeas = yeas[1],
+    noes = noes[1]
+  ) %>%
+  filter(yeas != n_yea | noes != n_no)
+```
+
+Now we can build a vote matrix by selecting out the desired roll calls and then spread the key value pair out to form a matrix in which the columns represent votes and the row represent legislators.  We get rid of any member who only cast of abstentions (sometimes this is a member in the data called "Vacancy").
+
+```{r assembly floor vote data}
+asm_floor_votes <- vote_dat %>%
+  right_join(asm_floor_vote_desc %>%
+               select(rcnum), by = "rcnum") %>%
+  group_by(name) %>%
+  filter(min(vote) != 9) %>%
+  ungroup() %>%
+  pivot_wider(names_from = rcnum,
+              values_from = vote,
+              values_fill = 0) %>%
+  rename(legis.name = name)
+head(asm_floor_votes)
+```
+
+### Forming a roll call data object
+
+If our goal is to fit a model like WNOMINATE or IDEAL to the roll call data we have to convert the data to `rollcall` object format.  We do that here:
+
+```{r form rollcall object}
+rcdat <-
+  rollcall(
+    as.matrix(asm_floor_votes[, 2:NCOL(asm_floor_votes)]),
+    notInLegis = 0,
+    missing = 9,
+    yea = 1,
+    nay = 6,
+    legis.names = asm_floor_votes[['legis.name']],
+    vote.names = colnames(asm_floor_votes)[2:NCOL(asm_floor_votes)],
+    legis.data = NULL,
+    vote.data=as.data.frame(asm_floor_vote_desc),
+    desc = NULL,
+    source = NULL
+  )
+summary(rcdat)
+```
+
+### Running WNOMINATE
+
+Finally, we can run WNOMINATE:
+
+```{r wnominate}
+wnom <- wnominate(rcdat, dim=2, polarity=c(59,2))
+```
+
+Plot the results:
+
+```{r plot}
+plot_res <- plot(wnom)
+```
+
+And, make a table of members organized by their first-dimension coordinates:
+
+```{r table}
+wnom$legislators %>%
+  mutate(member = rownames(wnom$legislators)) %>%
+  remove_rownames() %>%
+  dplyr::select(member, coord1D, coord2D, GMP, CC) %>%
+  arrange(coord1D) %>%
+  mutate(
+    coord1D = round(coord1D, 2),
+    coord2D = round(coord2D, 2),
+    GMP = round(GMP, 3),
+    CC = round(CC, 3)
+  ) %>%
+  knitr::kable(
+    format = "html",
+    escape = FALSE,
+    col.names = c("Member", "1st Dim.", "2nd Dim.", "GMP",
+                  "Percent \n Classified")
+  ) %>%
+  kableExtra::kable_styling(
+    bootstrap_options = c("striped", "hover"),
+    font_size = 10,
+    full_width = FALSE
+  ) %>%
+  kableExtra::add_header_above(c(
+    " " = 1,
+    "W-NOMINATE" = 2,
+    " " = 2
+  )) 
+```
