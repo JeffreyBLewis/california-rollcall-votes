@@ -13,8 +13,10 @@ get_and_read_fn <- function(url_tar) {
     "BILL_SUMMARY_VOTE_TBL.dat",
     "BILL_DETAIL_VOTE_TBL.dat"
   )
+  options(timeout=300) # Avoid timeout when large files is downloading.
   temp_zip <- tempfile(fileext = ".zip")
-  download.file(url_tar, temp_zip)
+  download.file(url_tar, temp_zip, mode="wget", cacheOK=FALSE)
+  options(timeout=60)
   
   #read into r objects
   bill_version_authors <-
@@ -262,5 +264,6 @@ push_to_github <- function(zip_file_name) {
   git2r::pull()
   git2r::add(path = zip_file_name)
   git2r::commit(message = "Data update...")
-  git2r::push()
+  #git2r::push() # Not authenticating correctly
+  system("git push") # Hacky way to get git login to work easily 
 }
