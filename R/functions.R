@@ -243,20 +243,23 @@ clean_fn <- function(dat) {
 zip_fn <- function(clean, year) {
   short_year <- year - ifelse(year > 1999, 2000, 1900)
   yr <- sprintf("%i-%i",  short_year, short_year + 1)
+  temp_dir <- tempdir()
   
   #write files
   write_tsv(clean$desc,
-            file = sprintf("ca%sdesc.dat", yr),
+            file = file.path(temp_dir, sprintf("ca%sdesc.dat", yr)),
             col_names = FALSE)
   write(clean$votes,
-        file = sprintf("ca%svotes.dat", yr))
+        file = file.path(temp_dir, sprintf("ca%svotes.dat", yr)))
   
   #zip into one folder
   zip_file_name <- sprintf("../Data/caleg%s.zip", yr)
   utils::zip(zipfile = zip_file_name,
              files = c(sprintf("ca%sdesc.dat", yr),
                        sprintf("ca%svotes.dat", yr)))
-  
+
+  unlink(file.path(temp_dir, sprintf("ca%sdesc.dat", yr)))
+  unlink(file.path(temp_dir, sprintf("ca%svotes.dat", yr)))
   return(zip_file_name)
 }
 
