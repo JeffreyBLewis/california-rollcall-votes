@@ -3,7 +3,6 @@
 #clean_fn
 #zip_and_publish_fn
 
-
 get_and_read_fn <- function(url_tar) {
   #get data from url
   files_list <- c(
@@ -15,12 +14,11 @@ get_and_read_fn <- function(url_tar) {
     "BILL_DETAIL_VOTE_TBL.dat"
   )
   temp_zip <- tempfile(fileext = ".zip")
-  download.file(url_tar, temp)
-  #utils::unzip(temp, files = files_list)
+  download.file(url_tar, temp_zip)
   
   #read into r objects
   bill_version_authors <-
-    read_tsv(unz(temp, "BILL_VERSION_AUTHORS_TBL.dat"),
+    read_tsv(unz(temp_zip, "BILL_VERSION_AUTHORS_TBL.dat"),
       col_names = c(
         "bill_version_id",
         "type",
@@ -39,7 +37,7 @@ get_and_read_fn <- function(url_tar) {
   
   
   bill_version_summary <- read_tsv(
-    unz(temp, "BILL_VERSION_TBL.dat"),
+    unz(temp_zip, "BILL_VERSION_TBL.dat"),
     col_names = c(
       "bill_version_id",
       "bill_id",
@@ -91,14 +89,14 @@ get_and_read_fn <- function(url_tar) {
     summarize(COMMITTEE_DESC = COMMITTEE_DESC[1])
   
   motion_dat <- read_tsv(
-    sprintf("BILL_MOTION_TBL.dat"),
+    unz(temp_zip, "BILL_MOTION_TBL.dat"),
     col_names = c("motion_id", "motion_text", "trans_uid",
                   "trans_update"),
     quote = "`"
   )
   
   vote_summary <- read_tsv(
-    sprintf("BILL_SUMMARY_VOTE_TBL.dat"),
+    unz(temp_zip, "BILL_SUMMARY_VOTE_TBL.dat"),
     col_names = c(
       "bill_id",
       "committee_code",
@@ -143,7 +141,7 @@ get_and_read_fn <- function(url_tar) {
   
   
   vote_dat <- read_tsv(
-    sprintf("BILL_DETAIL_VOTE_TBL.dat"),
+    unz(temp_zip, "BILL_DETAIL_VOTE_TBL.dat"),
     col_names = c(
       "bill_id",
       "location",
