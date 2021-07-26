@@ -1,0 +1,5 @@
+#!/bin/sh
+cd /var/data_builders/california-rollcall-votes
+git add R/california_rollcall_votes.log
+git commit -m "Updated log file"
+git push
