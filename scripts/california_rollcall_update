@@ -1,0 +1,3 @@
+#!/bin/sh
+cd /var/data_builders/california-rollcall-votes/R
+R -e "library(targets); date(); tar_make()" > ../log/california_rollcall_votes.log
