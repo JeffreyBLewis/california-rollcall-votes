@@ -1,6 +1,6 @@
 ## California Assembly and Senate Roll Call Vote Data, 1993 to the present
 
-This project provides ready-to-analyze roll call voting data from the California Assembly and Senate from 1993 to present. Data from the current session are updated weekly. The current and recent datasets are constructed from files provided at [https://downloads.leginfo.legislature.ca.gov](https://downloads.leginfo.legislature.ca.gov).  Datasets for sessions prior to 2017 were constructed from files accessed at [ftp://leginfo.ca.gov/](ftp://leginfo.ca.gov/).
+This project provides ready-to-analyze roll call voting data from the California Assembly and Senate from 1993 to present. Data from the current session are updated weekly. The current and recent datasets are constructed from files provided at [https://downloads.leginfo.legislature.ca.gov](https://downloads.leginfo.legislature.ca.gov).  Datasets for sessions prior to 2017 were constructed from files accessed at [ftp://leginfo.ca.gov/](http://leginfo.ca.gov/).
 
 A tutorial on how to load and analyze these data using R can be found [here](https://htmlpreview.github.io/?https://github.com/JeffreyBLewis/california-rollcall-votes/blob/master/Rmd/california_rollcall_howto.html). 
 
