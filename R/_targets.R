@@ -21,7 +21,8 @@ list(
   tar_target(name = clean,
              command = clean_fn(get_and_read)),
   tar_target(name = zip_file_name,
-             command = zip_fn(clean, year)),
+             command = zip_fn(clean, year),
+	     format = "file"),
   tar_target(
     name = github_status_null_for_now,
     command = push_to_github(zip_file_name),
