@@ -255,8 +255,9 @@ zip_fn <- function(clean, year) {
   #zip into one folder
   zip_file_name <- sprintf("../data/caleg%s.zip", yr)
   utils::zip(zipfile = zip_file_name,
-             files = c(sprintf("ca%sdesc.dat", yr),
-                       sprintf("ca%svotes.dat", yr)))
+             files = c(file.path(temp_dir, sprintf("ca%sdesc.dat", yr)),
+                       file.path(temp_dir, sprintf("ca%svotes.dat", yr))),
+             flags = "-r9Xj")
 
   unlink(file.path(temp_dir, sprintf("ca%sdesc.dat", yr)))
   unlink(file.path(temp_dir, sprintf("ca%svotes.dat", yr)))
