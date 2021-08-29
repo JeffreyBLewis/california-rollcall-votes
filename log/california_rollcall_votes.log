@@ -18,15 +18,21 @@ Type 'demo()' for some demos, 'help()' for on-line help, or
 Type 'q()' to quit R.
 
 > library(targets); date(); tar_make()
-[1] "Wed Aug 25 16:01:43 2021"
-[31m✔ skip target year
-[39m[31m✔ skip target url_tar
-[39m[31m✔ skip target get_and_read
-[39m[31m✔ skip target clean
-[39m[31m✔ skip target zip_file_name
-[39m[31m✔ skip target github_status_null_for_now
-[39m[31m✔ skip pipeline
-[39m[31mWarning message:
+[1] "Sun Aug 29 01:01:04 2021"
+✔ skip target year
+✔ skip target url_tar
+✔ skip target get_and_read
+✔ skip target clean
+• start target zip_file_name
+updating: ca21-22desc.dat (deflated 81%)
+updating: ca21-22votes.dat (deflated 100%)
+• built target zip_file_name
+• start target github_status_null_for_now
+To https://github.com/JeffreyBLewis/california-rollcall-votes.git
+   da5a424..cb8f2c4  master -> master
+• built target github_status_null_for_now
+• end pipeline
+Warning message:
 found non-standard resource group handle in resources list. Unstructrued resources list are deprecated in targets >= 0.5.0.9000 (2021-06-07). Use tar_resources() and various tar_resources_*() helper functions to create the resources argument to tar_target() and tar_option_set(). 
-[39m> 
+> 
 > 
