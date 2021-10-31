@@ -18,15 +18,15 @@ Type 'demo()' for some demos, 'help()' for on-line help, or
 Type 'q()' to quit R.
 
 > library(targets); date(); tar_make()
-[1] "Sun Oct 24 01:01:04 2021"
+[1] "Sun Oct 31 01:01:04 2021"
 ✔ skip target year
 • start target url_tar
 • built target url_tar
 • start target get_and_read
 trying URL 'https://downloads.leginfo.legislature.ca.gov/pubinfo_2021.zip'
-Content type 'application/zip' length 573794864 bytes (547.2 MB)
+Content type 'application/zip' length 574659461 bytes (548.0 MB)
 ==================================================
-downloaded 547.2 MB
+downloaded 548.0 MB
 
 Rows: 56690 Columns: 10
 ── Column specification ────────────────────────────────────────────────────────
@@ -45,7 +45,7 @@ dttm  (2): bill_version_action_date, trans_update
 
 ℹ Use `spec()` to retrieve the full column specification for this data.
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
-Rows: 9820 Columns: 9
+Rows: 9824 Columns: 9
 ── Column specification ────────────────────────────────────────────────────────
 Delimiter: "\t"
 chr  (8): committee_code, COMMITTEE_DESC, AGENDA_TIME, LINE1, LINE2, LINE3, ...
@@ -53,7 +53,7 @@ dttm (1): AGENDA_DATE
 
 ℹ Use `spec()` to retrieve the full column specification for this data.
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
-Rows: 87597 Columns: 4
+Rows: 87598 Columns: 4
 ── Column specification ────────────────────────────────────────────────────────
 Delimiter: "\t"
 chr  (2): motion_text, trans_uid
@@ -62,7 +62,7 @@ dttm (1): trans_update
 
 ℹ Use `spec()` to retrieve the full column specification for this data.
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
-Rows: 9036 Columns: 15
+Rows: 9037 Columns: 15
 ── Column specification ────────────────────────────────────────────────────────
 Delimiter: "\t"
 chr  (7): bill_id, committee_code, result, trans_uid, file_item_num, file_lo...
@@ -71,7 +71,7 @@ dttm (3): vote_date_time, trans_update, session_date
 
 ℹ Use `spec()` to retrieve the full column specification for this data.
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
-Rows: 259502 Columns: 12
+Rows: 259514 Columns: 12
 ── Column specification ────────────────────────────────────────────────────────
 Delimiter: "\t"
 chr  (6): bill_id, location, member, vote, trans_uid, speaker
@@ -83,8 +83,14 @@ dttm (3): datetime, committee_code, member_order
 • built target get_and_read
 • start target clean
 • built target clean
-✔ skip target zip_file_name
-✔ skip target github_status_null_for_now
+• start target zip_file_name
+updating: ca21-22desc.dat (deflated 81%)
+updating: ca21-22votes.dat (deflated 100%)
+• built target zip_file_name
+• start target github_status_null_for_now
+To https://github.com/JeffreyBLewis/california-rollcall-votes.git
+   fce1847..ed651eb  master -> master
+• built target github_status_null_for_now
 • end pipeline
 Warning messages:
 1: found non-standard resource group handle in resources list. Unstructrued resources list are deprecated in targets >= 0.5.0.9000 (2021-06-07). Use tar_resources() and various tar_resources_*() helper functions to create the resources argument to tar_target() and tar_option_set(). 
