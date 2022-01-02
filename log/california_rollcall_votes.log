@@ -18,13 +18,13 @@ Type 'demo()' for some demos, 'help()' for on-line help, or
 Type 'q()' to quit R.
 
 > library(targets); date(); tar_make()
-[1] "Sun Dec 26 01:01:04 2021"
+[1] "Sun Jan  2 01:01:03 2022"
 ✔ skip target year
 • start target url_tar
 • built target url_tar
 • start target get_and_read
 trying URL 'https://downloads.leginfo.legislature.ca.gov/pubinfo_2021.zip'
-Content type 'application/zip' length 576152361 bytes (549.5 MB)
+Content type 'application/zip' length 576152584 bytes (549.5 MB)
 ==================================================
 downloaded 549.5 MB
 
@@ -45,7 +45,7 @@ dttm  (2): bill_version_action_date, trans_update
 
 ℹ Use `spec()` to retrieve the full column specification for this data.
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
-Rows: 9850 Columns: 9
+Rows: 9853 Columns: 9
 ── Column specification ────────────────────────────────────────────────────────
 Delimiter: "\t"
 chr  (8): committee_code, COMMITTEE_DESC, AGENDA_TIME, LINE1, LINE2, LINE3, ...
