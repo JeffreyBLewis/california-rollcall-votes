@@ -18,17 +18,17 @@ Type 'demo()' for some demos, 'help()' for on-line help, or
 Type 'q()' to quit R.
 
 > library(targets); date(); tar_make()
-[1] "Sun Apr 24 01:01:02 2022"
+[1] "Sun May  1 01:01:02 2022"
 ✔ skip target year
 • start target url_tar
 • built target url_tar
 • start target get_and_read
 trying URL 'https://downloads.leginfo.legislature.ca.gov/pubinfo_2021.zip'
-Content type 'application/zip' length 691261312 bytes (659.2 MB)
+Content type 'application/zip' length 723746033 bytes (690.2 MB)
 ==================================================
-downloaded 659.2 MB
+downloaded 690.2 MB
 
-Rows: 73693 Columns: 10
+Rows: 76575 Columns: 10
 ── Column specification ────────────────────────────────────────────────────────
 Delimiter: "\t"
 chr  (9): bill_version_id, type, house, name, contribution, committee_member...
@@ -36,7 +36,7 @@ dttm (1): trans_update
 
 ℹ Use `spec()` to retrieve the full column specification for this data.
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
-Rows: 13067 Columns: 18
+Rows: 13558 Columns: 18
 ── Column specification ────────────────────────────────────────────────────────
 Delimiter: "\t"
 chr  (15): bill_version_id, bill_id, bill_version_action, request_num, subje...
@@ -45,7 +45,7 @@ dttm  (2): bill_version_action_date, trans_update
 
 ℹ Use `spec()` to retrieve the full column specification for this data.
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
-Rows: 10192 Columns: 9
+Rows: 10223 Columns: 9
 ── Column specification ────────────────────────────────────────────────────────
 Delimiter: "\t"
 chr  (8): committee_code, COMMITTEE_DESC, AGENDA_TIME, LINE1, LINE2, LINE3, ...
@@ -53,7 +53,7 @@ dttm (1): AGENDA_DATE
 
 ℹ Use `spec()` to retrieve the full column specification for this data.
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
-Rows: 87909 Columns: 4
+Rows: 87967 Columns: 4
 ── Column specification ────────────────────────────────────────────────────────
 Delimiter: "\t"
 chr  (2): motion_text, trans_uid
@@ -62,7 +62,7 @@ dttm (1): trans_update
 
 ℹ Use `spec()` to retrieve the full column specification for this data.
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
-Rows: 10621 Columns: 15
+Rows: 11192 Columns: 15
 ── Column specification ────────────────────────────────────────────────────────
 Delimiter: "\t"
 chr  (7): bill_id, committee_code, result, trans_uid, file_item_num, file_lo...
@@ -71,7 +71,7 @@ dttm (3): vote_date_time, trans_update, session_date
 
 ℹ Use `spec()` to retrieve the full column specification for this data.
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
-Rows: 291610 Columns: 12
+Rows: 300443 Columns: 12
 ── Column specification ────────────────────────────────────────────────────────
 Delimiter: "\t"
 chr  (6): bill_id, location, member, vote, trans_uid, speaker
@@ -81,9 +81,16 @@ dttm (3): datetime, committee_code, member_order
 ℹ Use `spec()` to retrieve the full column specification for this data.
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
 • built target get_and_read
-✔ skip target clean
-✔ skip target zip_file_name
-✔ skip target github_status_null_for_now
+• start target clean
+• built target clean
+• start target zip_file_name
+updating: ca21-22desc.dat (deflated 81%)
+updating: ca21-22votes.dat (deflated 100%)
+• built target zip_file_name
+• start target github_status_null_for_now
+To https://github.com/JeffreyBLewis/california-rollcall-votes.git
+   61e26ca..6451bfa  master -> master
+• built target github_status_null_for_now
 • end pipeline
 Warning messages:
 1: found non-standard resource group handle in resources list. Unstructrued resources list are deprecated in targets >= 0.5.0.9000 (2021-06-07). Use tar_resources() and various tar_resources_*() helper functions to create the resources argument to tar_target() and tar_option_set(). 
@@ -91,6 +98,7 @@ Warning messages:
 Please use `cur_group_id()` instead.
 This warning is displayed once every 8 hours.
 Call `lifecycle::last_warnings()` to see where this warning was generated. 
-3: 1 targets produced warnings. Run tar_meta(fields = warnings) for the messages. 
+3: Unreplaced values treated as NA as .x is not compatible. Please specify replacements exhaustively or supply .default 
+4: 2 targets produced warnings. Run tar_meta(fields = warnings) for the messages. 
 > 
 > 
