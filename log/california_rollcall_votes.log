@@ -18,17 +18,17 @@ Type 'demo()' for some demos, 'help()' for on-line help, or
 Type 'q()' to quit R.
 
 > library(targets); date(); tar_make()
-[1] "Sun May 15 01:01:02 2022"
+[1] "Sun May 22 01:01:03 2022"
 ✔ skip target year
 • start target url_tar
 • built target url_tar
 • start target get_and_read
 trying URL 'https://downloads.leginfo.legislature.ca.gov/pubinfo_2021.zip'
-Content type 'application/zip' length 761573982 bytes (726.3 MB)
+Content type 'application/zip' length 777773695 bytes (741.7 MB)
 ==================================================
-downloaded 726.3 MB
+downloaded 741.7 MB
 
-Rows: 79919 Columns: 10
+Rows: 81040 Columns: 10
 ── Column specification ────────────────────────────────────────────────────────
 Delimiter: "\t"
 chr  (9): bill_version_id, type, house, name, contribution, committee_member...
@@ -36,7 +36,7 @@ dttm (1): trans_update
 
 ℹ Use `spec()` to retrieve the full column specification for this data.
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
-Rows: 13931 Columns: 18
+Rows: 13997 Columns: 18
 ── Column specification ────────────────────────────────────────────────────────
 Delimiter: "\t"
 chr  (15): bill_version_id, bill_id, bill_version_action, request_num, subje...
@@ -45,7 +45,7 @@ dttm  (2): bill_version_action_date, trans_update
 
 ℹ Use `spec()` to retrieve the full column specification for this data.
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
-Rows: 10254 Columns: 9
+Rows: 10273 Columns: 9
 ── Column specification ────────────────────────────────────────────────────────
 Delimiter: "\t"
 chr  (8): committee_code, COMMITTEE_DESC, AGENDA_TIME, LINE1, LINE2, LINE3, ...
@@ -53,7 +53,7 @@ dttm (1): AGENDA_DATE
 
 ℹ Use `spec()` to retrieve the full column specification for this data.
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
-Rows: 88102 Columns: 4
+Rows: 88224 Columns: 4
 ── Column specification ────────────────────────────────────────────────────────
 Delimiter: "\t"
 chr  (2): motion_text, trans_uid
@@ -62,7 +62,7 @@ dttm (1): trans_update
 
 ℹ Use `spec()` to retrieve the full column specification for this data.
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
-Rows: 12191 Columns: 15
+Rows: 12488 Columns: 15
 ── Column specification ────────────────────────────────────────────────────────
 Delimiter: "\t"
 chr  (7): bill_id, committee_code, result, trans_uid, file_item_num, file_lo...
@@ -71,7 +71,7 @@ dttm (3): vote_date_time, trans_update, session_date
 
 ℹ Use `spec()` to retrieve the full column specification for this data.
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
-Rows: 318699 Columns: 12
+Rows: 327674 Columns: 12
 ── Column specification ────────────────────────────────────────────────────────
 Delimiter: "\t"
 chr  (6): bill_id, location, member, vote, trans_uid, speaker
@@ -89,7 +89,7 @@ updating: ca21-22votes.dat (deflated 100%)
 • built target zip_file_name
 • start target github_status_null_for_now
 To https://github.com/JeffreyBLewis/california-rollcall-votes.git
-   7e16fc5..8d52e18  master -> master
+   ce4bb69..a2759e0  master -> master
 • built target github_status_null_for_now
 • end pipeline
 Warning messages:
