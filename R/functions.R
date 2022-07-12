@@ -228,7 +228,10 @@ clean_fn <- function(dat) {
       vote,
       AYE = 1,
       NOE = 6,
-      ABS = 9
+      ABS = 9,
+      "`AYE`" = 1,
+      "`NOE`" = 6,
+      "`ABS`" = 9
     )) %>%
     spread(rcnum, vote, fill = 0)  %>%
     apply(1, function(x)
