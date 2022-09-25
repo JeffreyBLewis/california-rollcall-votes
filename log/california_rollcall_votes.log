@@ -18,17 +18,17 @@ Type 'demo()' for some demos, 'help()' for on-line help, or
 Type 'q()' to quit R.
 
 > library(targets); date(); tar_make()
-[1] "Sun Sep 18 01:01:05 2022"
+[1] "Sun Sep 25 01:01:04 2022"
 ✔ skip target year
 • start target url_tar
 • built target url_tar
 • start target get_and_read
 trying URL 'https://downloads.leginfo.legislature.ca.gov/pubinfo_2021.zip'
-Content type 'application/zip' length 1107898001 bytes (1056.6 MB)
+Content type 'application/zip' length 1108395107 bytes (1057.0 MB)
 ==================================================
-downloaded 1056.6 MB
+downloaded 1057.0 MB
 
-Rows: 118968 Columns: 10
+Rows: 119663 Columns: 10
 ── Column specification ────────────────────────────────────────────────────────
 Delimiter: "\t"
 chr  (9): bill_version_id, type, house, name, contribution, committee_member...
@@ -36,7 +36,7 @@ dttm (1): trans_update
 
 ℹ Use `spec()` to retrieve the full column specification for this data.
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
-Rows: 18189 Columns: 18
+Rows: 18269 Columns: 18
 ── Column specification ────────────────────────────────────────────────────────
 Delimiter: "\t"
 chr  (15): bill_version_id, bill_id, bill_version_action, request_num, subje...
@@ -45,7 +45,7 @@ dttm  (2): bill_version_action_date, trans_update
 
 ℹ Use `spec()` to retrieve the full column specification for this data.
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
-Rows: 10597 Columns: 9
+Rows: 10600 Columns: 9
 ── Column specification ────────────────────────────────────────────────────────
 Delimiter: "\t"
 chr  (8): committee_code, COMMITTEE_DESC, AGENDA_TIME, LINE1, LINE2, LINE3, ...
