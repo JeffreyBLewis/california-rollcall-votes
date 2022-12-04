@@ -18,13 +18,13 @@ Type 'demo()' for some demos, 'help()' for on-line help, or
 Type 'q()' to quit R.
 
 > library(targets); date(); tar_make()
-[1] "Sun Nov 27 01:01:05 2022"
+[1] "Sun Dec  4 01:01:05 2022"
 ✔ skip target year
 • start target url_tar
 • built target url_tar
 • start target get_and_read
 trying URL 'https://downloads.leginfo.legislature.ca.gov/pubinfo_2021.zip'
-Content type 'application/zip' length 1120573521 bytes (1068.7 MB)
+Content type 'application/zip' length 1120572556 bytes (1068.7 MB)
 ==================================================
 downloaded 1068.7 MB
 
