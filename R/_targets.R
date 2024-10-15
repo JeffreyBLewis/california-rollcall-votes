@@ -4,7 +4,7 @@ options(tidyverse.quiet = TRUE)
 tar_option_set(packages = c("tidyverse"))
 list(
   tar_target(name = year,
-             command = 2021),
+             command = 2022),
   tar_target(
     name = url_tar,
     command = paste(
