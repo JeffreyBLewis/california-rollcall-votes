@@ -1,7 +1,19 @@
 #contains:
+#current_session_year_fn
 #get_and_read_fn
 #clean_fn
 #zip_and_publish_fn
+
+current_session_year_fn <- function(date = Sys.Date(),
+                                     override = Sys.getenv("ROLLCALL_YEAR", "")) {
+  # CA legislative sessions are two years, starting in odd-numbered years
+  # (e.g. 2025-26). Map any date to the start year of its session.
+  # ROLLCALL_YEAR lets a manual workflow run target a different session
+  # (e.g. for backfilling a past session).
+  if (nzchar(override)) return(as.integer(override))
+  yr <- as.integer(format(date, "%Y"))
+  if (yr %% 2 == 0) yr - 1L else yr
+}
 
 get_and_read_fn <- function(url_tar) {
   #get data from url
@@ -265,12 +277,4 @@ zip_fn <- function(clean, year) {
   unlink(file.path(temp_dir, sprintf("ca%sdesc.dat", yr)))
   unlink(file.path(temp_dir, sprintf("ca%svotes.dat", yr)))
   return(zip_file_name)
-}
-
-push_to_github <- function(zip_file_name) {
-  git2r::pull()
-  git2r::add(path = zip_file_name)
-  git2r::commit(message = "Data update...")
-  #git2r::push() # Not authenticating correctly
-  system("git push") # Hacky way to get git login to work easily 
 }
