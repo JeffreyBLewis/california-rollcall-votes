@@ -229,7 +229,11 @@ clean_fn <- function(dat) {
       bill = str_extract(bill_id, "(?<=\\d{9}).+"),
       datetime = as.Date(datetime, format = "%Y-%m-%d")
     ) %>%
-    distinct(
+    # Key on rcnum alone (not the full field list) so a roll call is
+    # guaranteed one row even if duplicate vote_summary matches disagree
+    # on a metadata field.
+    distinct(rcnum, .keep_all = TRUE) %>%
+    select(
       rcnum,
       bill,
       author,
@@ -245,6 +249,10 @@ clean_fn <- function(dat) {
   
   votes <- vote_dat_all %>%
     select(member, rcnum, vote) %>%
+    # A member's actual vote on a roll call is the same regardless of which
+    # duplicate vote_summary metadata row it fanned out through in the join
+    # above; collapse to one row per (member, rcnum) before pivoting wide.
+    distinct(member, rcnum, .keep_all = TRUE) %>%
     mutate(vote = recode(
       vote,
       AYE = 1,
