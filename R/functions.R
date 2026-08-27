@@ -155,8 +155,12 @@ get_and_read_fn <- function(url_tar) {
       result
     ) %>%
     filter(bill_version_action_date < vote_date_time) %>%
-    group_by(bill_id, COMMITTEE_DESC, vote_date_time, motion_id) %>%
-    filter(version_num == max(version_num))
+    # Group by the exact key clean_fn later joins vote_dat on, so that key
+    # is guaranteed unique here even if version_num ties or an upstream
+    # table has duplicate rows for the same vote.
+    group_by(bill_id, committee_code, motion_id, vote_date_time, vote_date_seq) %>%
+    slice_max(version_num, n = 1, with_ties = FALSE) %>%
+    ungroup()
   
   
   vote_dat <- read_tsv(
