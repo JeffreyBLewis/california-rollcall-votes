@@ -76,6 +76,10 @@ get_and_read_fn <- function(url_tar) {
     quote = "`"
   ) %>%
     left_join(bill_version_authors, by = "bill_version_id") %>%
+    # A bill version can have more than one principal coauthor, each
+    # flagged primary_author_flag == "Y". Keep one row per
+    # bill_version_id so downstream joins stay one-to-one.
+    distinct(bill_version_id, .keep_all = TRUE) %>%
     select(bill_version_id,
            bill_id,
            bill_version_action_date,
