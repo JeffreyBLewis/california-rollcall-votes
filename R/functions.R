@@ -25,10 +25,11 @@ get_and_read_fn <- function(url_tar) {
     "BILL_SUMMARY_VOTE_TBL.dat",
     "BILL_DETAIL_VOTE_TBL.dat"
   )
-  options(timeout=300) # Avoid timeout when large files is downloading.
+  old_timeout <- getOption("timeout")
+  options(timeout = 1800) # session archive is now >1GB; avoid timing out mid-download.
   temp_zip <- tempfile(fileext = ".zip")
   download.file(url_tar, temp_zip, mode="wget", cacheOK=FALSE)
-  options(timeout=60)
+  options(timeout = old_timeout)
   
   #read into r objects
   bill_version_authors <-
